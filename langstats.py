@@ -41,7 +41,7 @@ def get_language_data(credentials):
                      'top_repos': LangStat("Top languages by repositories", '# of repos', 'top_repos')}
     for repo in g.get_user().get_repos():
         if repo.owner.login == credentials['login']:
-            languages = repo.get_languages()
+            languages = repo.get_languages()  # excludes vendored languages from the repo's .gitattributes
             if languages:
                 for lang, bytes_count in languages.items():
                     language_data['all_bytes'].add(lang, bytes_count)
