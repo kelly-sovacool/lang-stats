@@ -16,7 +16,7 @@ Collect personal programming language statistics from GitHub repos using [PyGith
     password: your_password
     ```
 
-    *Warning*: do not add the credentials file to git. Be careful not to accidentally share it with anyone.
+    **Warning**: do not add the credentials file to git. Be careful not to accidentally share it with anyone.
 
 1. Install dependencies:
 
