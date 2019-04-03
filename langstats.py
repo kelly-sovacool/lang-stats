@@ -1,11 +1,9 @@
 #!/usr/local/bin/miniconda3/envs/lang-stats/bin/python
-import base64
 import collections
 from github import Github
 import os
 import plotly
 import yaml
-# TODO: parse Jupyter Notebooks & Snakemake files to count languages within them more accurately
 
 
 class LangStat:
@@ -37,10 +35,10 @@ class LangStat:
 
 def get_language_data(credentials):
     g = Github(credentials['login'], credentials['password'])
-    language_data = {'all_bytes': LangStat("Programming languages by bytes of code", 'bytes of code', 'all_bytes'),
-                     'all_repos': LangStat('Programming languages by presence in repositories', '# of repos', 'all_counts'),
-                     'top_bytes': LangStat("Top languages by bytes of code", 'bytes of code', 'top_bytes'),
-                     'top_repos': LangStat("Top languages in repositories", '# of repos', 'top_repos')}
+    language_data = {'all_bytes': LangStat("My languages by bytes of code", 'bytes of code', 'all_bytes'),
+                     'all_repos': LangStat('My languages by presence in repositories', '# of repos', 'all_counts'),
+                     'top_bytes': LangStat("Top repo languages by bytes of code", 'bytes of code', 'top_bytes'),
+                     'top_repos': LangStat("Top languages by repositories", '# of repos', 'top_repos')}
     for repo in g.get_user().get_repos():
         if repo.owner.login == credentials['login']:
             languages = repo.get_languages()
