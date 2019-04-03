@@ -1,5 +1,9 @@
-# personal access token
-.token
+# PyCharm
+.idea/
+# Snakemake
+.snakemake
+# github user credentials
+credentials.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
