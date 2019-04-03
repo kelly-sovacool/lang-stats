@@ -26,7 +26,7 @@ class LangStat:
         tuples = self.counter.most_common()
         x = [lang[0] for lang in tuples]
         y = [lang[1] for lang in tuples]
-        figure = plotly.graph_objs.Figure(data=[plotly.graph_objs.Bar(x=x, y=y)],
+        figure = plotly.graph_objs.Figure(data=[plotly.graph_objs.Bar(x=x, y=y, text=y, textposition='auto')],
                                           layout=plotly.graph_objs.Layout(title=self.description,
                                                                           xaxis=dict(title='language'),
                                                                           yaxis=dict(title=self.count_type)))
