@@ -33,14 +33,15 @@ class LangStat:
         plotly.io.write_image(figure, self.filename)
 
 
-def get_language_data(credentials):
-    g = Github(credentials['login'], credentials['password'])
+def get_language_data(github):
+
     language_data = {'all_bytes': LangStat("My languages by bytes of code", 'bytes of code', 'all_bytes'),
                      'all_repos': LangStat('My languages by presence in repositories', '# of repos', 'all_repos'),
                      'top_bytes': LangStat("Top repo languages by bytes of code", 'bytes of code', 'top_bytes'),
                      'top_repos': LangStat("Top languages by repositories", '# of repos', 'top_repos')}
-    for repo in g.get_user().get_repos():
-        if repo.owner.login == credentials['login']:
+    for repo in github.get_user().get_repos():
+        # only count repositories the user owns or is a collaborator in
+        if repo.owner.login == github.get_user().login or (repo.permissions.push and github.get_user().login in set(user.login for user in repo.get_collaborators())):
             languages = repo.get_languages()  # excludes vendored languages from the repo's .gitattributes
             if languages:
                 for lang, bytes_count in languages.items():
@@ -56,7 +57,8 @@ def main():
     if not os.path.exists('figures'):
         os.mkdir('figures')
     credentials = yaml.load(open('credentials.yaml'), Loader=yaml.Loader)
-    language_data = get_language_data(credentials)
+    github = Github(credentials['login'], credentials['password'])
+    language_data = get_language_data(github)
     for stats in language_data.values():
         stats.make_plot()
 
