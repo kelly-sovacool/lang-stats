@@ -1,4 +1,4 @@
-#!/usr/local/bin/miniconda3/envs/lang-stats/bin/python
+#!/Users/kelly/miniconda3/envs/lang-stats/bin/python
 import collections
 from github import Github
 import os
