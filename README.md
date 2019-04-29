@@ -21,7 +21,7 @@ Collect personal programming language statistics from GitHub repos using [PyGith
 1. Install dependencies:
 
     ```
-    conda env create -n lang-stats -f environment.yaml
+    conda env create -n lang-stats -f environment.simple.yaml
     conda activate lang-stats
     ```
 
