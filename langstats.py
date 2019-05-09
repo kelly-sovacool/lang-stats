@@ -34,33 +34,36 @@ class LangStat:
 
 
 def get_language_data(github):
-
     language_data = {'all_bytes': LangStat("My languages by bytes of code", 'bytes of code', 'all_bytes'),
                      'all_repos': LangStat('My languages by presence in repositories', '# of repos', 'all_repos'),
                      'top_bytes': LangStat("Top repo languages by bytes of code", 'bytes of code', 'top_bytes'),
                      'top_repos': LangStat("Top languages by repositories", '# of repos', 'top_repos')}
-    for repo in github.get_user().get_repos():
-        # only count repositories the user owns or is a collaborator in
-        if repo.owner.login == github.get_user().login or (repo.permissions.push and github.get_user().login in set(user.login for user in repo.get_collaborators())):
-            languages = repo.get_languages()  # excludes vendored languages from the repo's .gitattributes
-            if languages:
-                for lang, bytes_count in languages.items():
-                    language_data['all_bytes'].add(lang, bytes_count)
-                language_data['all_repos'].update(languages.keys())
-                top_language = max(languages, key=lambda k: languages[k])
-                language_data['top_repos'].add(top_language, 1)
-                language_data['top_bytes'].add(top_language, languages[top_language])
+    with open('results/repos.txt', 'w') as outfile:
+        for repo in github.get_user().get_repos():
+            # only count repositories the user owns or is a collaborator in
+            if repo.owner.login == github.get_user().login or (repo.permissions.push and github.get_user().login in set(user.login for user in repo.get_collaborators())):
+                outfile.write(f"{repo.owner.login}/{repo.name}\n")
+                languages = repo.get_languages()  # excludes vendored languages from the repo's .gitattributes
+                if languages:
+                    for lang, bytes_count in languages.items():
+                        language_data['all_bytes'].add(lang, bytes_count)
+                    language_data['all_repos'].update(languages.keys())
+                    top_language = max(languages, key=lambda k: languages[k])
+                    language_data['top_repos'].add(top_language, 1)
+                    language_data['top_bytes'].add(top_language, languages[top_language])
     return language_data
 
 
 def main():
-    if not os.path.exists('figures'):
-        os.mkdir('figures')
+    for dir in ('figures', 'results'):
+        if not os.path.exists(dir):
+            os.mkdir(dir)
     credentials = yaml.load(open('credentials.yaml'), Loader=yaml.Loader)
     github = Github(credentials['login'], credentials['password'])
     language_data = get_language_data(github)
     for stats in language_data.values():
         stats.make_plot()
+
 
 
 if __name__ == "__main__":
