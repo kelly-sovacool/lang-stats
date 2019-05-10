@@ -39,9 +39,12 @@ def get_language_data(github):
                      'top_bytes': LangStat("Top repo languages by bytes of code", 'bytes of code', 'top_bytes'),
                      'top_repos': LangStat("Top languages by repositories", '# of repos', 'top_repos')}
     with open('results/repos.txt', 'w') as outfile:
+        user = github.get_user(github.get_user().login)
         for repo in github.get_user().get_repos():
-            # only count repositories the user owns or is a collaborator in
-            if repo.owner.login == github.get_user().login or (repo.permissions.push and github.get_user().login in set(user.login for user in repo.get_collaborators())):
+            is_owner = repo.owner == user
+            is_contributor = user in repo.get_contributors()
+            # only include contributing repos
+            if is_owner or is_contributor:
                 outfile.write(f"{repo.owner.login}/{repo.name}\n")
                 languages = repo.get_languages()  # excludes vendored languages from the repo's .gitattributes
                 if languages:
