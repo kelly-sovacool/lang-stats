@@ -2,6 +2,7 @@ c-andy-martin/tcf-words
 GabrielleRab/PyCon_2019
 GWC-DCMB/CapstoneProject
 GWC-DCMB/codeDemos
+GWC-DCMB/SummerExperience
 kelly-sovacool/advent-of-code-2018
 kelly-sovacool/bioinf-contest-2019
 kelly-sovacool/bioinf529-winter2019
@@ -29,6 +30,7 @@ kelly-sovacool/snakemake_hpc_mwe
 kelly-sovacool/stats-ref
 kelly-sovacool/tiger_salamander_project
 kelly-sovacool/undergrad-comp-sci
+SchlossLab/documenting-R
 SchlossLab/OptiFitAnalysis
 SchlossLab/schlosslab.github.io
 thesuperlab/useful-programs
