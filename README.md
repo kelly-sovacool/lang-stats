@@ -1,6 +1,8 @@
 # lang-stats
 Collect personal programming language statistics from GitHub repos using [PyGithub](https://pygithub.readthedocs.io/en/latest/).
 
+This project is now archived and the functionality has been merged into my [meta-repository](https://github.com/kelly-sovacool/meta-repo).
+
 ## Usage
 
 1. Clone this repo.
